@@ -39,7 +39,7 @@ begin
 		o_EN <= '0';
 		o_SS <= '1';
 		state<= st_IDLE;
-	elsif RISING_EDGE(i_CLK) then
+	elsif FALLING_EDGE(i_CLK) then
 		case state is
 			when st_IDLE =>
 				if(i_START = '1') then
@@ -50,8 +50,7 @@ begin
 					state<= st_IDLE;
 				end if;
 			when st_TRANSMISSION =>
-				if(i_RISE = '1') then -- IF RISE EDGE DETECTION, COUNT -- PERGUNTAR
-				-- CONTAGEM FUNCIONA SE O TEMPO DE RISE EDGE DETECT N PEGAR VARIAS BORDAS DO CLOCK RAPIDO
+				if(i_RISE = '1') then -- IF RISE EDGE DETECTION, COUNT 
 					w_count_CLOCK <= w_count_CLOCK + 1;
 				end if;
 				if (w_count_CLOCK = "1000") then -- if edge count = 8 then TX DONE

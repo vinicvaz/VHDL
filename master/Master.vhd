@@ -9,7 +9,9 @@ entity MASTER is
 	);
 	
 	Port (
-		i_CLK     		: in  std_logic;		-- EXTERNAL CLOCK 50MHz (FPGA) 
+		i_CLK     		: in  std_logic;		-- PLL CLOCK 100MHz 
+		i_SCLK			: in std_logic;		-- PLL SERIAL CLOCK 1MHz
+		
 		i_RST		 		: in  std_logic;		-- RESET
 		i_START      	: in  std_logic;		-- ENABLE TRANSMISSION BUTTON
 		i_DATA	 		: in std_logic_vector((DATA_SIZE-1) downto 0); -- 4 BITS BCD INPUT
@@ -33,16 +35,6 @@ SIGNAL w_DATA	: 	std_logic_vector(7 downto 0); -- 8 BITS DATA TO CONCATENATE
 SIGNAL w_EN		: std_logic; -- ENABLE TO SCLK
 
 -- COMPONENTS
-
-		-- PLL e clock ---
-component pll
-	PORT
-	(
-		inclk0		: IN STD_LOGIC  := '0';
-		c0				: OUT STD_LOGIC ; -- 100 MHz clock
-		c1				: OUT STD_LOGIC   -- 1MHz clock (SCLK)
-	);
-end component;
 
 		-- DETECTOR DE BORDA -- 
 component Detector_Borda is
@@ -96,31 +88,26 @@ end component;
 begin
 
 w_DATA <= "0000" & i_DATA; -- TRANSFORM 4 BITS BCD ON 8 BITS DATA
-o_SCLK <= w_EN and w_SCLK; -- LOGIC AND TO ENABLE SERIAL CLOCK JUST ON TX
-o_CLK <= w_CLK; -- 100MHz clock to output
+o_SCLK <= w_EN and i_SCLK; -- LOGIC AND TO ENABLE SERIAL CLOCK JUST ON TX
+o_CLK <= i_CLK; -- 100MHz clock to output
+
+w_SCLK <= o_SCLK;
 
 -- DETECTOR DE BORDA
 Instancia_01	:	Detector_Borda
 	port map(
 		i_RST			=> i_RST,  -- RESET
-		i_CLK			=> w_CLK,  -- 100MHz CLOCK 
+		i_CLK			=> i_CLK,  -- 100MHz CLOCK 
 		i_SIGNAL		=> w_SCLK, -- SIGNAL SCLK TO COUNT EDGES
 		o_RISE		=> w_RISE, -- RISE OUTPUT
 		o_FALL		=> w_FALL  -- FALL OUTPUT
 	
 	);
--- PLL
-Instancia_02 : pll
-	port map(
-		inclk0		=> i_CLK, -- FPGA CLOCK
-		c0				=> w_CLK, -- 100MHz CLOCK
-		c1				=> w_SCLK -- 1MHz SERIAL CLOCK
-	);
 
 -- Conversor paralelo -> serial
 Instancia_03 : Conversor_par2ser
 	port map(
-		i_clk     => w_CLK,   -- 100MHz CLOCK
+		i_clk     => i_CLK,   -- 100MHz CLOCK
 		i_rst     => i_RST,   -- RESET
 		i_LOAD    => i_START, -- START TX BUTTON
 		i_ND		 => w_RISE,  -- IF RISE CONVERT
@@ -133,11 +120,11 @@ Instancia_03 : Conversor_par2ser
 Instancia_04 : Maquina_Master
 	port map(
 	
-		i_CLK		=> w_CLK,	-- 100MHz CLOCK
+		i_CLK		=> i_CLK,	-- 100MHz CLOCK
 		i_RST		=> i_RST,	-- RESET
 		i_DATA	=> w_DATA,	-- 8 BITS INPUT DATA (VER SE PRECISA ENTRAR COM DADO NA MAQUINA, ACHO QUE NAO)
 		i_RISE	=> w_RISE,  -- INPUT RISE EDGE
-		i_FALL	=> w_FALL,  -- INPUT FALL EDGE (USED TO END TX)
+		i_FALL	=> w_FALL,  -- INPUT FALL EDGE (TX END)
 		i_START	=> i_START, -- INPUT START TX BUTTON
 		
 		o_EN		=> w_EN, 	-- OUTPUT ENABLE SERIAL CLOCK
