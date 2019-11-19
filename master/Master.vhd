@@ -90,7 +90,6 @@ begin
 w_DATA <= "0000" & i_DATA; -- TRANSFORM 4 BITS BCD ON 8 BITS DATA
 o_SCLK <= w_EN and i_SCLK; -- LOGIC AND TO ENABLE SERIAL CLOCK JUST ON TX
 o_CLK <= i_CLK; -- 100MHz clock to output
-
 w_SCLK <= o_SCLK;
 
 -- DETECTOR DE BORDA

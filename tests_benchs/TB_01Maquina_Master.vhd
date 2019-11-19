@@ -55,9 +55,9 @@ begin
 	 process
 		 begin
 			 w_CLK <= '1';
-			 wait for 0.005 us;
+			 wait for 5 ns;
 			 w_CLK <= '0';
-			 wait for 0.005 us;
+			 wait for 5 ns;
 	 end process;
 	 
 	-- RESET PROCESS - 10 us
@@ -78,10 +78,19 @@ begin
 		wait for 1 us;
 	end process;
 	
+	-- FALL EDGE PROCESS
+	process
+	begin
+		wait for 0.5 us;
+		w_FALL<='1';
+		wait for 10 ns;
+		w_FALL<='0';
+		wait for 0.5 us;
+	end process;
+	
 	--FSM PROCESS
 	PROCESS
 	BEGIN
-	w_FALL <= '1';
 	w_RST <= '0';
 	wait for 11 us;
 	w_RST <= '1';
@@ -89,7 +98,7 @@ begin
 	w_START <= '1';
 	wait for 20 ns;
 	w_START <= '0';
-	wait;
+	wait for 11 us;
 	
 	END PROCESS;
 	
