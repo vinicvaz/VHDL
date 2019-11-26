@@ -4,17 +4,13 @@ use ieee.std_logic_arith.all;
 use ieee.std_logic_unsigned.all;
 
 entity Maquina_Slave is
-	Generic(	
-		DATA_SIZE : integer := 8
-	);
 	
 	Port (
 		i_CLK     		: in  std_logic;		-- CLOCK 100MHz (c0 PLL)
 		i_RST		 		: in  std_logic;		-- RESET
 		i_SS      	   : in  std_logic;		-- INPUT SLAVE SELECT (ENABLED WITH LOW)
-		i_FALL			: in std_logic		-- FALL EDGE DETECTION INPUT
-		
-		
+		i_FALL			: in std_logic;			-- FALL EDGE DETECTION INPUT
+		o_FREE			: out std_logic
 		
 		
 	);
@@ -37,6 +33,7 @@ begin
 
 	if(i_RST = '0') then
 		w_count_FALL <= (others=> '0');
+		o_FREE <= '0';
 		state<= st_IDLE;
 	elsif RISING_EDGE(i_CLK) then
 		case state is
@@ -50,11 +47,13 @@ begin
 				if(i_FALL = '1') then
 					w_count_FALL <= w_count_FALL + 1;
 				end if;
-				if(w_count_FALL = "1000" and i_SS = '1') then
+				if(w_count_FALL >= "1000" and i_SS = '1') then
+					o_FREE <='1';
 					state<= st_END;
 				end if;
 			when st_END =>
 				w_count_FALL <= (others=> '0');
+				o_FREE <='0';
 				state<= st_IDLE;
 		end case;
 	end if;
