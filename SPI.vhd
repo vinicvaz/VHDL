@@ -44,6 +44,9 @@ end component;
 
 	-- MASTER
 component MASTER is
+	Generic(	
+		DATA_SIZE : integer := 4
+	);
 	Port (
 		i_CLK     		: in  std_logic;		-- PLL CLOCK 100MHz 
 		i_SCLK			: in std_logic;		-- PLL SERIAL CLOCK 1MHz
@@ -62,6 +65,9 @@ end component;
 
 	-- SLAVE
 component Slave is
+	Generic(
+		DATA_SIZE : integer := 8
+	);
 	Port (
 		i_CLK			: in std_logic; -- INPUT CLOCK (100MHz)
 		i_SCLK 		: in std_logic; -- INPUT SERIAL CLOCK (1MHz)
@@ -85,6 +91,9 @@ Instancia_01	: PLL
 	);
 
 Instancia_02	: Master
+	Generic Map(
+		DATA_SIZE => 4
+	)
 	Port Map(
 		i_CLK     		=> w_CLK,
 		i_SCLK			=> w_SCLK,
@@ -100,6 +109,9 @@ Instancia_02	: Master
 	);
 	
 Instancia_03	: Slave
+	Generic Map(
+		DATA_SIZE => 8
+	)
 	Port Map (
 		i_CLK			=> tx_CLK,
 		i_SCLK 		=> tx_SCLK,
