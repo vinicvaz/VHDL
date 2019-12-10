@@ -24,7 +24,14 @@ seven segments (via BCD converter). The MISO wire will not be implemented.
 The master sends data over the serial clock rising edge and the slave responds at the falling edge
 
 ## Usage
-We used [Altera Quartus and Model Sim](http://fpgasoftware.intel.com/13.0/?edition=subscription) to development and tests. 
+We used [Altera Quartus and Model Sim](http://fpgasoftware.intel.com/13.0/?edition=subscription) to development and tests.
+
+If you want to create your own project with this files you should follow this steps:  
+**1. Open Quartus**  
+**2. Create New Project**  
+**3. Add all files to your Project**  
+**4. Set [SPI](https://github.com/vinicvaz/VHDL/tree/SPI_Top_Level/SPI_Top_Level) as Top Level Entity**
+
 
 ### Device Info: 
 
