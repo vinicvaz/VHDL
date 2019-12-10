@@ -18,8 +18,7 @@ The goal is to “type” a binary number into the sliders, the Master machine s
 this number via the SPI bus and the slave machine sends the received number to the
 seven segments (via BCD converter). The MISO wire will not be implemented.
 
-## Visuals
-**SPI Communication**  
+## SPI Communication
 ![SPI](https://i.imgur.com/C905gif.png)  
 The master sends data over the serial clock rising edge and the slave responds at the falling edge
 
@@ -41,6 +40,18 @@ If you want to create your own project with this files you should follow this st
 **Pin Count: 484**  
 **Speed Grade: 6**  
 **Name: EP3C16F484C6**  
+
+## Visuals
+
+**Top Level Master Simulation**  
+![Master](https://i.imgur.com/VahSZ0N.png)  
+
+**Top Level Slave Simulation**
+![Slave](https://i.imgur.com/COBR9FZ.png)  
+
+**Top Level SPI Simulation**  
+
+![SPI](https://i.imgur.com/n1t3MKu.png)
 
 
 
