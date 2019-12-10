@@ -53,9 +53,9 @@ port map(
 -- RESET PROCESS - 10 us
 	process 
 		begin
-			w_RST <= '0';
+			w_RST <= '1';
 			wait for 10 us;
-			w_RST<= '1';
+			w_RST<= '0';
 			wait;
 	end process;
 	

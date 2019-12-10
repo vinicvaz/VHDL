@@ -30,6 +30,7 @@ SIGNAL w_MOSI		: std_logic;
 SIGNAL tx_SCLK		: std_logic;
 SIGNAL tx_CLK		: std_logic;
 SIGNAL w_DATA		: std_logic_vector(7 downto 0);
+SIGNAL w_RST		: std_logic;
 
 
 -- COMPONENTS
@@ -91,6 +92,8 @@ end component;
 
 begin
 
+w_RST <= not i_RST;
+
 -- INSTANCIAS
 
 	-- PLL
@@ -109,7 +112,7 @@ Instancia_02	: Master
 		i_CLK     		=> w_CLK,
 		i_SCLK			=> w_SCLK,
 		
-		i_RST		 		=> i_RST,
+		i_RST		 		=> w_RST,
 		i_START      	=> i_START,
 		i_DATA	 		=> i_DATA,
 		
@@ -126,7 +129,7 @@ Instancia_03	: Slave
 	Port Map (
 		i_CLK			=> tx_CLK,
 		i_SCLK 		=> tx_SCLK,
-		i_RST			=> i_RST,
+		i_RST			=> w_RST,
 		i_MOSI		=> w_MOSI,
 		i_SS			=> w_SS,
 		o_DATA		=> w_DATA
