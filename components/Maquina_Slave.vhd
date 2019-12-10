@@ -47,7 +47,7 @@ begin
 				if(i_FALL = '1') then
 					w_count_FALL <= w_count_FALL + 1;
 				end if;
-				if(w_count_FALL >= "1000" and i_SS = '1') then
+				if(w_count_FALL = "1000" and i_SS = '1') then
 					o_FREE <='1';
 					state<= st_END;
 				end if;
