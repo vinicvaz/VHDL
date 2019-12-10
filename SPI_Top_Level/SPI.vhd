@@ -29,6 +29,7 @@ SIGNAL w_SS			: std_logic;
 SIGNAL w_MOSI		: std_logic;
 SIGNAL tx_SCLK		: std_logic;
 SIGNAL tx_CLK		: std_logic;
+SIGNAL w_DATA		: std_logic_vector(7 downto 0);
 
 
 -- COMPONENTS
@@ -78,6 +79,16 @@ component Slave is
 	);
 end component;
 
+	-- DECODER BCD -> 7 SEG
+component Decoder_7Seg is
+	Port(
+	
+		i_DATA			: in std_logic_vector(7 downto 0);-- Input Data
+		o_DATA			: out std_logic_vector(7 downto 0) -- Output Data
+	
+	);
+end component;
+
 begin
 
 -- INSTANCIAS
@@ -89,7 +100,7 @@ Instancia_01	: PLL
 		c0			=> w_CLK,  -- 100 MHz USED CLOCK
 		c1			=> w_SCLK -- 1 MHz SERIAL CLOCK
 	);
-
+	-- MASTER
 Instancia_02	: Master
 	Generic Map(
 		DATA_SIZE => 4
@@ -107,7 +118,7 @@ Instancia_02	: Master
 		o_SCLK	 		=> tx_SCLK,
 		o_CLK				=> tx_CLK 
 	);
-	
+	-- SLAVE
 Instancia_03	: Slave
 	Generic Map(
 		DATA_SIZE => 8
@@ -118,7 +129,14 @@ Instancia_03	: Slave
 		i_RST			=> i_RST,
 		i_MOSI		=> w_MOSI,
 		i_SS			=> w_SS,
-		o_DATA		=> o_DATA
+		o_DATA		=> w_DATA
 	);
+	-- DECODER 7 SEG
+Instancia_04	: Decoder_7Seg
+	Port Map (
+		i_DATA => w_DATA,
+		o_DATA => o_DATA
+	);
+	
 	
 end behavioral;

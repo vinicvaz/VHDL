@@ -63,7 +63,7 @@ port map(
 	process
 	begin
 		wait for 11 us;
-		w_DATA <= "1010";
+		w_DATA <= "0010";
 		wait for 20 ns;
 		w_START <= '1';
 		wait for 20 ns;
