@@ -2,6 +2,7 @@
 VHDL-SPI Protocol
 
 **Author: Vinícius Camozzato Vaz**
+**Professor: Marcelo Berejuck**
 
 ## Description
 
