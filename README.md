@@ -50,9 +50,6 @@ If you want to create your own project with this files you should follow this st
 **Top Level Slave Simulation**
 ![Slave](https://i.imgur.com/COBR9FZ.png)  
 
-**Top Level SPI Simulation**  
-
-![SPI](https://i.imgur.com/n1t3MKu.png)
 
 
 
