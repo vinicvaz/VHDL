@@ -50,6 +50,9 @@ If you want to create your own project with this files you should follow this st
 **Top Level Slave Simulation**
 ![Slave](https://i.imgur.com/COBR9FZ.png)  
 
+**Top Level SPI**
+![SPI](https://camo.githubusercontent.com/cd777544a8722c6d7c73ab4c1ec831a109fde440/68747470733a2f2f692e696d6775722e636f6d2f6e3174334d4b752e706e67)
+
 
 
 
