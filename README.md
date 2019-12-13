@@ -62,7 +62,7 @@ You can find the Diagrams and Documentation on this link:
 [Documentation](https://github.com/vinicvaz/VHDL/tree/master/Diagrams%20and%20Documentation)
 
 ## Contributing
-Pull requests are welcome. For major changes, please open an issue or send us an email to discuss what you would like to change.
+Pull requests are welcome. For major changes, please open an issue or send to me an email to discuss what you would like to change.
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
